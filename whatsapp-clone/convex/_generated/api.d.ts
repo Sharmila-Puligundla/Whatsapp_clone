@@ -16,7 +16,6 @@ import type {
 } from "convex/server";
 import type * as clerk from "../clerk.js";
 import type * as http from "../http.js";
-import type * as schema from "../schema.js";
 import type * as users from "../users.js";
 
 /**
@@ -30,7 +29,6 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   clerk: typeof clerk;
   http: typeof http;
-  schema: typeof schema;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
