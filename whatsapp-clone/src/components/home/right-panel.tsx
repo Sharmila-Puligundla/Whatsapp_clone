@@ -6,13 +6,18 @@ import MessageContainer from "./message-container";
 import ChatPlaceHolder from "@/components/home/chat-placeholder";
 import GroupMembersDialog from "./group-members-dialog";
 import { useConversationStore } from "@/store/chat-store";
+import { useConvexAuth } from "convex/react";
 
 const RightPanel = () => {
-	const {selectedConversation, setSelectedConversation} = useConversationStore();
+	const { selectedConversation, setSelectedConversation } = useConversationStore();
+	const { isLoading } = useConvexAuth();
+
+	if (isLoading) return null;
 	if (!selectedConversation) return <ChatPlaceHolder />;
 
 	const conversationName = selectedConversation.groupName || selectedConversation.name;
 	const conversationImage = selectedConversation.groupImage || selectedConversation.image;
+
 	return (
 		<div className='w-3/4 flex flex-col'>
 			<div className='w-full sticky top-0 z-50'>
@@ -27,7 +32,9 @@ const RightPanel = () => {
 						</Avatar>
 						<div className='flex flex-col'>
 							<p>{conversationName}</p>
-							{selectedConversation.isGroup && (<GroupMembersDialog selectedConversation ={selectedConversation} />)}
+							{selectedConversation.isGroup && (
+								<GroupMembersDialog selectedConversation={selectedConversation} />
+							)}
 						</div>
 					</div>
 
@@ -35,10 +42,7 @@ const RightPanel = () => {
 						<a href='/video-call' target='_blank'>
 							<Video size={23} />
 						</a>
-						<X size={16} className='cursor-pointer' 
-						onClick={() => setSelectedConversation(null)}
-
-						/>
+						<X size={16} className='cursor-pointer' onClick={() => setSelectedConversation(null)} />
 					</div>
 				</div>
 			</div>
